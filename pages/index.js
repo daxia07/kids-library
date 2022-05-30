@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import clientPromise from "../lib/mongodb";
 
-export default function Home() {
+export default function Home( {isConnected }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,6 +21,15 @@ export default function Home() {
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
         </p>
+
+        {isConnected ? (
+            <h2 className="subtitle">You are connected to MongoDB</h2>
+        ) : (
+            <h2 className="subtitle">
+              You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
+              for instructions.
+            </h2>
+        )}
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
@@ -66,4 +76,19 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  try {
+    await clientPromise
+
+    return {
+      props: { isConnected: true }
+    }
+  } catch (e) {
+      console.log(e)
+      return {
+        props: { isConnected: false }
+    }
+  }
 }
