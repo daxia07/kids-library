@@ -59,7 +59,7 @@ export default function BookCard(props) {
                     Available: {available_num}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Abstract: {expanded ? abstract: trimmedAbstract}
+                    Abstract: {expanded ? abstractText: trimmedAbstract}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
