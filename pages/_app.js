@@ -14,7 +14,7 @@ function MyApp(props) {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Cool kids' library</title>
+        <title>{"Cool kids' library"}</title>
         <meta name="viewpoint" content={"initial-scale=1, width=device-width"} />
       </Head>
       <ThemeProvider theme={theme}>

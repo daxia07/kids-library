@@ -7,7 +7,7 @@ import MuiLink from '@mui/material/Link'
 
 const Anchor = styled('a')({})
 
-export const NextLinkComposed = React.forwardRef((props, ref) => {
+export const NextLinkComposed = React.forwardRef(function NextLinkComposed(props, ref) {
     const { to, LinkAs, replace, scroll, shallow, prefetch, local, ...other } = props
     return (
         <NextLink
@@ -25,7 +25,7 @@ export const NextLinkComposed = React.forwardRef((props, ref) => {
     )
 })
 
-const Link = React.forwardRef((props, ref) => {
+const Link = React.forwardRef(function Link(props, ref) {
     const {
         activeClassName = 'active',
         as,
