@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import clientPromise from "../../lib/mongodb";
+// import getCollection from "../../lib/util";
+// import clientPromise from "../../lib/mongodb";
+// import {findBookByIbsn} from "../../lib/fetchBook";
 
 const Code = (p) => <code {...p} />
 
@@ -11,8 +14,8 @@ const Books = ({ book }) => {
             <h1>Path: {asPath}</h1>
             <hr/>
             <p>This page is rendered by <Code>{`pages${route}.js`}</Code></p>
-            <p>This query <Code>slug</Code> for this page is: {' '}
-                <Code>{JSON.stringify(query.slug)}</Code>
+            <p>This query <Code>isbn</Code> for this page is: {' '}
+                <Code>{JSON.stringify(query.isbn)}</Code>
             </p>
             <Link href="/">
                 <a> Back Home</a>
@@ -22,13 +25,13 @@ const Books = ({ book }) => {
 }
 
 export async function getServerSideProps(context) {
+    const { params: {isbn} } = context
     try {
         const client = await clientPromise
-        const db = client.db("library")
+        const db = client.db('library')
         const collection = db.collection('books')
-        const query = {}
-        const book = await collection.findOne(query)
-        console.log(book)
+        // const collection = getCollection("books")
+        const book = await collection.findOne({isbn})
         return {
             props: { book: JSON.stringify(book) }
         }
