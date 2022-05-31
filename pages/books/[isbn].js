@@ -1,9 +1,6 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import clientPromise from "../../lib/mongodb";
-// import getCollection from "../../lib/util";
-// import clientPromise from "../../lib/mongodb";
-// import {findBookByIbsn} from "../../lib/fetchBook";
+import getCollection from "../../lib/util";
 
 const Code = (p) => <code {...p} />
 
@@ -27,10 +24,7 @@ const Books = ({ book }) => {
 export async function getServerSideProps(context) {
     const { params: {isbn} } = context
     try {
-        const client = await clientPromise
-        const db = client.db('library')
-        const collection = db.collection('books')
-        // const collection = getCollection("books")
+        const collection = await getCollection("books")
         const book = await collection.findOne({isbn})
         return {
             props: { book: JSON.stringify(book) }
