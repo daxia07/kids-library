@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import Link from 'next/link'
-import getCollection from "../../lib/util";
+import {getBookByIsbn} from "../../lib/fetchBook";
 
 const Code = (p) => <code {...p} />
 
@@ -23,17 +23,6 @@ const Books = ({ book }) => {
 
 export async function getServerSideProps(context) {
     const { params: {isbn} } = context
-    try {
-        const collection = await getCollection("books")
-        const book = await collection.findOne({isbn})
-        return {
-            props: { book: JSON.stringify(book) }
-        }
-    } catch (e) {
-        console.log(e)
-        return {
-            props: { book: null }
-        }
-    }
+    return await getBookByIsbn(isbn);
 }
 export default Books
